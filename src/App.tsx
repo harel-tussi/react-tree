@@ -4,7 +4,6 @@ import Header from "./components/Header";
 import Tree from "./components/Tree";
 import GlobalStyles from "./globalStyles";
 import useTrees from "./hooks/useTrees";
-
 function App() {
   const {
     loading,

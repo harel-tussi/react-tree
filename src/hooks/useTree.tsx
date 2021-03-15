@@ -5,7 +5,6 @@ import {
   deleteCategoryNodeFromTree,
   updateCategoryName,
 } from "../utils";
-import update from "immutability-helper";
 
 interface Props {
   root: null | ICategoryNode;
@@ -67,8 +66,7 @@ function useTree({ root }: Props) {
   const updateNode = useCallback(
     (node: ICategoryNode, categoryName: string) => {
       setTree((prevTree) => {
-        const immutableNode = update(node, {});
-        updateCategoryName(immutableNode, categoryName);
+        updateCategoryName(node, categoryName);
         return prevTree ? { ...prevTree } : null;
       });
     },
