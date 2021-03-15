@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 interface Props {
   nodeRef: null | ICategoryNode;
-  parentRef: ICategoryNode | null;
+  parentRef: null | ICategoryNode;
 }
 
 function useCategory({ nodeRef, parentRef }: Props) {
