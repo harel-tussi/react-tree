@@ -51,8 +51,11 @@ const updateDocument = async (
 
 const createDocument = async (collection: string, data: any) => {
   const snapshot = await getCollectionRef(collection).add(data);
-  const newDoc: any = (await snapshot.get()).data();
-  return newDoc;
+  const newDoc: any = await snapshot.get();
+  return {
+    id: newDoc.id,
+    ...newDoc.data(),
+  };
 };
 
 const firestoreService = {

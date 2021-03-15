@@ -3,4 +3,5 @@ interface ICategoryNode {
   categoryName: string;
   children: ICategoryNode[] | null;
   root: boolean;
+  v: number;
 }

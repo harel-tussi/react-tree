@@ -16,6 +16,8 @@ export const createCategory = async (categoryName: string) => {
   const newCategory = {
     categoryName,
     children: [],
+    root: true,
+    v: 0,
   };
   return await firestoreService.createDocument(collection, newCategory);
 };

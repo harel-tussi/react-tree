@@ -1,5 +1,4 @@
 import { useCallback, useState } from "react";
-import firestoreService from "../firebase/firestore";
 import categoriesService from "../services/categories";
 
 function useTrees() {

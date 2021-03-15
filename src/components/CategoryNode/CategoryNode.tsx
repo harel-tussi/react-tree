@@ -1,4 +1,5 @@
-import React, { ReactElement, useState, useCallback } from "react";
+import React, { ReactElement } from "react";
+import useCategory from "../../hooks/useCategory";
 import {
   Container,
   Title,
@@ -8,11 +9,8 @@ import {
 } from "./CategoryNode.elements";
 
 type Props = ICategoryNode & {
-  // addNewNode: (parentId: string, newNode: ICategoryNode) => void;
   addNewNode: (node: ICategoryNode, newNode: ICategoryNode) => void;
-  // deleteNode: (categoryNodeId: string) => void;
   deleteNode: (parentNode: ICategoryNode | null, nodeId: string) => void;
-  // updateNode: (categoryNodeId: string, categoryName: string) => void;
   updateNode: (node: ICategoryNode, categoryName: string) => void;
   nodeRef: ICategoryNode;
   parentRef: ICategoryNode | null;
@@ -27,16 +25,16 @@ function CategoryNode({
   updateNode,
   nodeRef,
   parentRef,
+  root,
 }: Props): ReactElement {
-  const [showChildren, setShowChildren] = useState<boolean>(false);
-  const [categoryNameState, setCategoryNameState] = useState<string>("");
-  const toggleChildren = useCallback(() => {
-    setShowChildren((prev) => !prev);
-  }, [setShowChildren]);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCategoryNameState(e.target.value);
-  };
+  const {
+    categoryNameState,
+    setCategoryNameState,
+    showChildren,
+    toggleChildren,
+    handleInputChange,
+    setShowChildren,
+  } = useCategory();
 
   const onAddChild = () => {
     try {
@@ -45,8 +43,8 @@ function CategoryNode({
         categoryName: categoryNameState,
         children: null,
         root: false,
+        v: 0,
       };
-      // addNewNode(id, newNode);
       addNewNode(nodeRef, newNode);
       setCategoryNameState("");
       setShowChildren(true);
@@ -54,24 +52,24 @@ function CategoryNode({
   };
 
   const onDelete = () => {
-    // deleteNode(id);
     deleteNode(parentRef, id);
   };
 
   const onUpdate = () => {
-    // updateNode(id, categoryNameState);
     updateNode(nodeRef, categoryNameState);
     setCategoryNameState("");
   };
 
   const isInputEmpty = !!!categoryNameState.trim();
 
+  console.log(id);
+
   return (
     <Container>
       <TopContainer>
         <Title onClick={toggleChildren}>{categoryName}</Title>
         <Input onChange={handleInputChange} value={categoryNameState} />
-        <ActionButton onClick={onDelete}>Delete</ActionButton>
+        {!root && <ActionButton onClick={onDelete}>Delete</ActionButton>}
         <ActionButton onClick={onUpdate} disabled={isInputEmpty}>
           Update
         </ActionButton>
@@ -83,16 +81,16 @@ function CategoryNode({
         (children ?? []).map((node: ICategoryNode) => (
           <CategoryNode
             {...node}
-            nodeRef={node}
             key={node.id}
+            nodeRef={node}
+            parentRef={nodeRef}
             addNewNode={addNewNode}
             deleteNode={deleteNode}
             updateNode={updateNode}
-            parentRef={nodeRef}
           />
         ))}
     </Container>
   );
 }
 
-export default React.memo(CategoryNode);
+export default CategoryNode;
