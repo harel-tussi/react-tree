@@ -1,25 +1,88 @@
-import React, { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-function useCategory() {
-  const [showChildren, setShowChildren] = useState<boolean>(false);
-  const [categoryNameState, setCategoryNameState] = useState<string>("");
+interface Props {
+  nodeRef: null | ICategoryNode;
+  parentRef: ICategoryNode | null;
+}
+
+function useCategory({ nodeRef, parentRef }: Props) {
+  const [showChildren, setShowChildren] = useState(false);
+  const [currentNode, setCurrentNode] = useState<null | ICategoryNode>(nodeRef);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (currentNode) {
+      if (nodeRef) nodeRef.children = currentNode?.children;
+    }
+  }, [currentNode, nodeRef]);
+
   const toggleChildren = useCallback(() => {
     setShowChildren((prev) => !prev);
-  }, [setShowChildren]);
+  }, []);
+  const clearInput = () => {
+    if (inputRef.current) inputRef.current.value = "";
+  };
 
-  const handleInputChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      setCategoryNameState(e.target.value);
+  const deleteCategory = useCallback(
+    (nodeId: string) => {
+      if (parentRef) {
+        parentRef.children = parentRef.children.filter(
+          (node) => node.id !== nodeId
+        );
+      }
+      setCurrentNode(null);
     },
-    [setCategoryNameState]
+    [parentRef, setCurrentNode]
   );
+
+  const onUpdate = useCallback(() => {
+    const inputValue = inputRef?.current?.value ?? "";
+    if (!inputValue) return;
+    setCurrentNode((prevNode) => {
+      if (prevNode) {
+        return {
+          ...prevNode,
+          categoryName: inputValue,
+        };
+      }
+      return prevNode;
+    });
+    if (nodeRef) nodeRef.categoryName = inputValue;
+    clearInput();
+  }, [nodeRef, setCurrentNode]);
+
+  const onAdd = useCallback(() => {
+    const inputValue = inputRef?.current?.value ?? "";
+    if (!inputValue) return;
+    const newNode = {
+      id: String(new Date().getTime()),
+      categoryName: inputValue,
+      children: [],
+      root: false,
+      v: 1,
+    };
+    setCurrentNode((prevNode) => {
+      if (prevNode) {
+        return {
+          ...prevNode,
+          children: [...prevNode.children, newNode],
+        };
+      }
+      return prevNode;
+    });
+    setShowChildren(true);
+    clearInput();
+  }, [inputRef, setCurrentNode]);
+
   return {
     showChildren,
+    currentNode,
+    setCurrentNode,
+    inputRef,
     toggleChildren,
-    categoryNameState,
-    setCategoryNameState,
-    handleInputChange,
-    setShowChildren,
+    deleteCategory,
+    onUpdate,
+    onAdd,
   };
 }
 

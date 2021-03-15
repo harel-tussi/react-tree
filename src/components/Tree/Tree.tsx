@@ -7,17 +7,7 @@ interface Props {
 }
 
 function Tree({ root }: Props): ReactElement {
-  const {
-    addNewNode,
-    deleteNode,
-    updateNode,
-    tree,
-    loading,
-    error,
-    loadTree,
-    saveTree,
-    deleteTree,
-  } = useTree({
+  const { tree, loading, error, loadTree, saveTree, deleteTree } = useTree({
     root,
   });
 
@@ -32,10 +22,8 @@ function Tree({ root }: Props): ReactElement {
               <CategoryNode
                 {...tree}
                 nodeRef={tree}
-                addNewNode={addNewNode}
-                deleteNode={deleteNode}
-                updateNode={updateNode}
                 parentRef={null}
+                onDelete={() => {}}
               />
               <button onClick={loadTree}>Load Tree</button>
               <button onClick={saveTree}>Save Tree</button>

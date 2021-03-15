@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import { ReactElement } from "react";
 import useCategory from "../../hooks/useCategory";
 import {
   Container,
@@ -8,83 +8,49 @@ import {
   ActionButton,
 } from "./CategoryNode.elements";
 
-type Props = ICategoryNode & {
-  addNewNode: (node: ICategoryNode, newNode: ICategoryNode) => void;
-  deleteNode: (parentNode: ICategoryNode | null, nodeId: string) => void;
-  updateNode: (node: ICategoryNode, categoryName: string) => void;
+type Props = {
+  onDelete: (nodeId: string) => void;
   nodeRef: ICategoryNode;
   parentRef: ICategoryNode | null;
 };
 
 function CategoryNode({
-  id,
-  categoryName,
-  children,
-  addNewNode,
-  deleteNode,
-  updateNode,
   nodeRef,
   parentRef,
-  root,
-}: Props): ReactElement {
+  onDelete,
+}: Props): ReactElement | null {
   const {
-    categoryNameState,
-    setCategoryNameState,
     showChildren,
+    currentNode,
+    inputRef,
     toggleChildren,
-    handleInputChange,
-    setShowChildren,
-  } = useCategory();
+    deleteCategory,
+    onUpdate,
+    onAdd,
+  } = useCategory({ nodeRef, parentRef });
 
-  const onAddChild = () => {
-    try {
-      const newNode: ICategoryNode = {
-        id: String(new Date().getTime()),
-        categoryName: categoryNameState,
-        children: [],
-        root: false,
-        v: 0,
-      };
-      addNewNode(nodeRef, newNode);
-      setCategoryNameState("");
-      setShowChildren(true);
-    } catch (error) {}
-  };
-
-  const onDelete = () => {
-    deleteNode(parentRef, id);
-  };
-
-  const onUpdate = () => {
-    updateNode(nodeRef, categoryNameState);
-    setCategoryNameState("");
-  };
-
-  const isInputEmpty = !!!categoryNameState.trim();
+  if (!currentNode) return null;
 
   return (
     <Container>
       <TopContainer>
-        <Title onClick={toggleChildren}>{categoryName}</Title>
-        <Input onChange={handleInputChange} value={categoryNameState} />
-        {!root && <ActionButton onClick={onDelete}>Delete</ActionButton>}
-        <ActionButton onClick={onUpdate} disabled={isInputEmpty}>
-          Update
-        </ActionButton>
-        <ActionButton onClick={onAddChild} disabled={isInputEmpty}>
-          Add
-        </ActionButton>
+        <Title onClick={toggleChildren}>{currentNode.categoryName}</Title>
+        <Input ref={inputRef} />
+        {!currentNode.root && (
+          <ActionButton onClick={() => deleteCategory(nodeRef.id)}>
+            Delete
+          </ActionButton>
+        )}
+        <ActionButton onClick={onUpdate}>Update</ActionButton>
+        <ActionButton onClick={onAdd}>Add</ActionButton>
       </TopContainer>
       {showChildren &&
-        (children ?? []).map((node: ICategoryNode) => (
+        (currentNode.children ?? []).map((node: ICategoryNode) => (
           <CategoryNode
-            {...node}
             key={node.id}
             nodeRef={node}
             parentRef={nodeRef}
-            addNewNode={addNewNode}
-            deleteNode={deleteNode}
-            updateNode={updateNode}
+            onDelete={onDelete}
           />
         ))}
     </Container>
