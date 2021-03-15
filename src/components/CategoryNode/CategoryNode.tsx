@@ -45,14 +45,19 @@ function CategoryNode({ nodeRef, parentRef }: Props): ReactElement | null {
       {showChildren &&
         currentNode.children.map((node: ICategoryNode) => {
           return (
-            <CategoryNode key={node.id} nodeRef={node} parentRef={nodeRef} />
+            <MemoCategoryNode
+              key={node.id}
+              nodeRef={node}
+              parentRef={nodeRef}
+            />
           );
         })}
     </Container>
   );
 }
 
-export default memo(CategoryNode, (prevProps, nextProps) => {
-  if (prevProps.nodeRef.v === nextProps.nodeRef.v) return true;
-  return false;
+const MemoCategoryNode = memo(CategoryNode, (prevProps, nextProps) => {
+  return prevProps.nodeRef.v === nextProps.nodeRef.v;
 });
+
+export default CategoryNode;

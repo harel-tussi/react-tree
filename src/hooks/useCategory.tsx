@@ -18,7 +18,8 @@ function useCategory({ nodeRef, parentRef }: Props) {
 
   const toggleChildren = useCallback(() => {
     setShowChildren((prev) => !prev);
-  }, []);
+  }, [setShowChildren]);
+
   const clearInput = () => {
     if (inputRef.current) inputRef.current.value = "";
   };
@@ -43,7 +44,6 @@ function useCategory({ nodeRef, parentRef }: Props) {
         return {
           ...prevNode,
           categoryName: inputValue,
-          v: prevNode.v + 1,
         };
       }
       return prevNode;
