@@ -22,12 +22,7 @@ function Tree({ root }: Props): ReactElement {
               <button onClick={loadTree}>Load Tree</button>
               <button onClick={saveTree}>Save Tree</button>
               <button onClick={deleteTree}>Delete Tree</button>
-              <CategoryNode
-                {...tree}
-                nodeRef={tree}
-                parentRef={null}
-                onDelete={() => {}}
-              />
+              <CategoryNode nodeRef={tree} parentRef={null} />
             </>
           );
         }

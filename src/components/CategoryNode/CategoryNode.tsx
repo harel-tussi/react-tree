@@ -1,4 +1,4 @@
-import { ReactElement } from "react";
+import { memo, ReactElement } from "react";
 import useCategory from "../../hooks/useCategory";
 import {
   Container,
@@ -9,16 +9,11 @@ import {
 } from "./CategoryNode.elements";
 
 type Props = {
-  onDelete: (nodeId: string) => void;
   nodeRef: ICategoryNode;
   parentRef: ICategoryNode | null;
 };
 
-function CategoryNode({
-  nodeRef,
-  parentRef,
-  onDelete,
-}: Props): ReactElement | null {
+function CategoryNode({ nodeRef, parentRef }: Props): ReactElement | null {
   const {
     showChildren,
     currentNode,
@@ -32,9 +27,12 @@ function CategoryNode({
   if (!currentNode) return null;
 
   return (
-    <Container>
+    <Container root={currentNode.root}>
       <TopContainer>
-        <Title onClick={toggleChildren}>{currentNode.categoryName}</Title>
+        <Title onClick={toggleChildren}>
+          {currentNode.root ? "" : "-"}
+          {currentNode.categoryName}
+        </Title>
         <Input ref={inputRef} />
         {!currentNode.root && (
           <ActionButton onClick={() => deleteCategory(nodeRef.id)}>
@@ -45,16 +43,16 @@ function CategoryNode({
         <ActionButton onClick={onAdd}>Add</ActionButton>
       </TopContainer>
       {showChildren &&
-        (currentNode.children ?? []).map((node: ICategoryNode) => (
-          <CategoryNode
-            key={node.id}
-            nodeRef={node}
-            parentRef={nodeRef}
-            onDelete={onDelete}
-          />
-        ))}
+        currentNode.children.map((node: ICategoryNode) => {
+          return (
+            <CategoryNode key={node.id} nodeRef={node} parentRef={nodeRef} />
+          );
+        })}
     </Container>
   );
 }
 
-export default CategoryNode;
+export default memo(CategoryNode, (prevProps, nextProps) => {
+  if (prevProps.nodeRef.v === nextProps.nodeRef.v) return true;
+  return false;
+});

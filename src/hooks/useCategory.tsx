@@ -43,6 +43,7 @@ function useCategory({ nodeRef, parentRef }: Props) {
         return {
           ...prevNode,
           categoryName: inputValue,
+          v: prevNode.v + 1,
         };
       }
       return prevNode;

@@ -1,7 +1,21 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+interface ContainerProps {
+  root: boolean;
+}
+
+export const Container = styled.div<ContainerProps>`
   margin-left: 15px;
+  position: relative;
+  padding: 10px 0;
+  ::before {
+    position: absolute;
+    content: "";
+    width: 2px;
+    height: 18px;
+    background-color: ${(props) => (props.root ? "transparent" : "#005790")};
+    top: 5px;
+  }
 `;
 
 export const TopContainer = styled.div`
@@ -12,16 +26,7 @@ export const TopContainer = styled.div`
 export const Title = styled.h3`
   color: #005790;
   font-weight: bold;
-  border-left: 1px solid;
   margin: 0;
-  padding-top: 10px;
-
-  ::before {
-    content: "";
-    width: 20px;
-    height: 1px;
-    background-color: red;
-  }
 `;
 
 export const Input = styled.input``;
