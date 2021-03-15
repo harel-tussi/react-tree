@@ -27,6 +27,12 @@ export const Title = styled.h3`
 export const Input = styled.input``;
 
 export const ActionButton = styled.button`
-  background-color: Yellow;
   color: black;
+  padding: 0.2rem 0.6rem;
+  border-radius: 0.3125rem;
+  box-shadow: 0 3px 6px 0 rgb(0 0 0 / 9%);
+  background-color: #333333;
+  color: #fff;
+  margin-left: 0.75rem;
+  border: none;
 `;

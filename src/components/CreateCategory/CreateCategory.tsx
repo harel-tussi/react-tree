@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from "react";
-
+import { Label, Container, Input, Button } from "./CreateCategory.elements";
 interface Props {
   handleSubmit: (input: string) => void;
 }
@@ -15,10 +15,19 @@ function CreateCategory({ handleSubmit }: Props): ReactElement {
   };
 
   return (
-    <div>
-      <input type="text" value={input} onChange={handleChange} />
-      <button onClick={onSubmit}>Add</button>
-    </div>
+    <Container>
+      <Label htmlFor="newCategoryInput">Create New Category Tree</Label>
+      <Input
+        id="newCategoryInput"
+        type="text"
+        value={input}
+        onChange={handleChange}
+        placeholder="Category tree title..."
+      />
+      <Button onClick={onSubmit} disabled={!input.trim()}>
+        Create
+      </Button>
+    </Container>
   );
 }
 

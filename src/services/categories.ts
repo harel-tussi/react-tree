@@ -1,15 +1,15 @@
 import firestoreService from "./firestore";
 
-const collection = "categories";
+const COLLECTION = "categories";
 
 export const getCategoriesCollection = async () =>
-  await firestoreService.getCollection(collection);
+  await firestoreService.getCollection(COLLECTION);
 
 export const getCategory = async (docId: string) =>
-  await firestoreService.getDocument(collection, docId);
+  await firestoreService.getDocument(COLLECTION, docId);
 
 export const updateCategory = async (docId: string, data: ICategoryNode) => {
-  await firestoreService.updateDocument(collection, docId, data);
+  await firestoreService.updateDocument(COLLECTION, docId, data);
 };
 
 export const createCategory = async (categoryName: string) => {
@@ -19,11 +19,11 @@ export const createCategory = async (categoryName: string) => {
     root: true,
     v: 0,
   };
-  return await firestoreService.createDocument(collection, newCategory);
+  return await firestoreService.createDocument(COLLECTION, newCategory);
 };
 
 export const deleteCategory = async (docId: string) => {
-  await firestoreService.deleteDocument(collection, docId);
+  await firestoreService.deleteDocument(COLLECTION, docId);
 };
 
 const categoriesService = {

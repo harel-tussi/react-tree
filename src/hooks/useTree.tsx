@@ -1,11 +1,5 @@
 import { useCallback, useRef, useState } from "react";
 import categoriesService from "../services/categories";
-import {
-  addNewCategoryNodeToTree,
-  deleteCategoryNodeFromTree,
-  updateCategoryName,
-} from "../utils";
-
 interface Props {
   root: null | ICategoryNode;
 }
@@ -58,40 +52,7 @@ function useTree({ root }: Props) {
     }
   }, [setLoading, setError, tree, rootId]);
 
-  const addNewNode = useCallback(
-    (node: ICategoryNode, newNode: ICategoryNode) => {
-      setTree((prevTree) => {
-        addNewCategoryNodeToTree(node, newNode);
-        return prevTree ? { ...prevTree } : null;
-      });
-    },
-    [setTree]
-  );
-
-  const deleteNode = useCallback(
-    (parentNode: ICategoryNode | null, nodeId: string) => {
-      setTree((prevTree) => {
-        deleteCategoryNodeFromTree(parentNode, nodeId);
-        return prevTree ? { ...prevTree } : null;
-      });
-    },
-    [setTree]
-  );
-
-  const updateNode = useCallback(
-    (node: ICategoryNode, categoryName: string) => {
-      setTree((prevTree) => {
-        updateCategoryName(node, categoryName);
-        return prevTree ? { ...prevTree } : null;
-      });
-    },
-    [setTree]
-  );
-
   return {
-    addNewNode,
-    deleteNode,
-    updateNode,
     loadTree,
     saveTree,
     deleteTree,

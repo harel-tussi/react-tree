@@ -7,6 +7,12 @@ const GlobalStyles = createGlobalStyle`
         box-sizing:border-box;
         font-family:sans-serif;
     }
+
+    button{
+        outline-style:none;
+        cursor: pointer;
+    }
+
 `;
 
 export default GlobalStyles;

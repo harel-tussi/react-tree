@@ -19,15 +19,15 @@ function Tree({ root }: Props): ReactElement {
         if (tree) {
           return (
             <>
+              <button onClick={loadTree}>Load Tree</button>
+              <button onClick={saveTree}>Save Tree</button>
+              <button onClick={deleteTree}>Delete Tree</button>
               <CategoryNode
                 {...tree}
                 nodeRef={tree}
                 parentRef={null}
                 onDelete={() => {}}
               />
-              <button onClick={loadTree}>Load Tree</button>
-              <button onClick={saveTree}>Save Tree</button>
-              <button onClick={deleteTree}>Delete Tree</button>
             </>
           );
         }
