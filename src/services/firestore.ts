@@ -23,7 +23,7 @@ export const getConnection = () => {
 };
 
 const getCollectionRef = (collection: string) =>
-  firebase.firestore().collection(collection);
+  getConnection().collection(collection);
 
 const getCollection = async (collection: string) => {
   const snapshot = await getCollectionRef(collection).get();

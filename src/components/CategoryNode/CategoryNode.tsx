@@ -13,13 +13,17 @@ type Props = {
   parentRef: ICategoryNode | null;
 };
 
+// nodeRef - reference to our node in the tree
+// parentRef - reference to our parent node in the tree
+// currentNode - our local node state
+
 function CategoryNode({ nodeRef, parentRef }: Props): ReactElement | null {
   const {
     showChildren,
     currentNode,
     inputRef,
     toggleChildren,
-    deleteCategory,
+    onDelete,
     onUpdate,
     onAdd,
   } = useCategory({ nodeRef, parentRef });
@@ -35,7 +39,7 @@ function CategoryNode({ nodeRef, parentRef }: Props): ReactElement | null {
         </Title>
         <Input ref={inputRef} />
         {!currentNode.root && (
-          <ActionButton onClick={() => deleteCategory(nodeRef.id)}>
+          <ActionButton onClick={() => onDelete(nodeRef.id)}>
             Delete
           </ActionButton>
         )}

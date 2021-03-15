@@ -24,7 +24,8 @@ function useCategory({ nodeRef, parentRef }: Props) {
     if (inputRef.current) inputRef.current.value = "";
   };
 
-  const deleteCategory = useCallback(
+  // delete node
+  const onDelete = useCallback(
     (nodeId: string) => {
       if (parentRef) {
         parentRef.children = parentRef.children.filter(
@@ -36,6 +37,7 @@ function useCategory({ nodeRef, parentRef }: Props) {
     [parentRef, setCurrentNode]
   );
 
+  // updating node name
   const onUpdate = useCallback(() => {
     const inputValue = inputRef?.current?.value ?? "";
     if (!inputValue) return;
@@ -44,6 +46,7 @@ function useCategory({ nodeRef, parentRef }: Props) {
         return {
           ...prevNode,
           categoryName: inputValue,
+          v: prevNode.v + 1,
         };
       }
       return prevNode;
@@ -52,6 +55,7 @@ function useCategory({ nodeRef, parentRef }: Props) {
     clearInput();
   }, [nodeRef, setCurrentNode]);
 
+  // adding child node
   const onAdd = useCallback(() => {
     const inputValue = inputRef?.current?.value ?? "";
     if (!inputValue) return;
@@ -67,6 +71,7 @@ function useCategory({ nodeRef, parentRef }: Props) {
         return {
           ...prevNode,
           children: [...prevNode.children, newNode],
+          v: prevNode.v + 1,
         };
       }
       return prevNode;
@@ -81,7 +86,7 @@ function useCategory({ nodeRef, parentRef }: Props) {
     setCurrentNode,
     inputRef,
     toggleChildren,
-    deleteCategory,
+    onDelete,
     onUpdate,
     onAdd,
   };
