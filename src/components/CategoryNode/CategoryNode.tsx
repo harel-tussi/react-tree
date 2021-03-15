@@ -41,7 +41,7 @@ function CategoryNode({
       const newNode: ICategoryNode = {
         id: String(new Date().getTime()),
         categoryName: categoryNameState,
-        children: null,
+        children: [],
         root: false,
         v: 0,
       };

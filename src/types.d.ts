@@ -1,7 +1,7 @@
 interface ICategoryNode {
   id: string;
   categoryName: string;
-  children: ICategoryNode[] | null;
+  children: ICategoryNode[];
   root: boolean;
   v: number;
 }
