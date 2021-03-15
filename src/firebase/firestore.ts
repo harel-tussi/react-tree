@@ -22,51 +22,45 @@ export const getConnection = () => {
   return CURRENT_CONNECTION;
 };
 
-const getCategoriesRef = () => firebase.firestore().collection("categories");
+const getCollectionRef = (collection: string) =>
+  firebase.firestore().collection(collection);
 
-const getCategories = async () => {
-  const categoriesSnapshot = await getCategoriesRef().get();
-  const categories: ICategoryNode[] = [];
-  categoriesSnapshot.forEach((doc) => {
-    categories.push({
+const getCollection = async (collection: string) => {
+  const snapshot = await getCollectionRef(collection).get();
+  const result: any = [];
+  snapshot.forEach((doc) => {
+    result.push({
       id: doc.id,
-      categoryName: doc.data().categoryName,
-      children: doc.data().children ?? null,
-      root: doc.data().root ?? false,
+      ...doc.data(),
     });
   });
-  return categories;
+  return result;
 };
 
-const loadCategory = async (docId: string) => {
-  if (!docId) return null;
-  const categorySnapshot = await getCategoriesRef().doc(docId).get();
-  return categorySnapshot.data();
+const getDocument = async (collection: string, docId: string) => {
+  if (!docId || !collection) return null;
+  const snapshot = await getCollectionRef(collection).doc(docId).get();
+  return snapshot.data();
 };
 
-const updateCategory = async (docId: string, data: ICategoryNode) => {
-  return await getCategoriesRef().doc(docId).update(data);
-};
+const updateDocument = async (
+  collection: string,
+  docId: string,
+  data: ICategoryNode
+) => await getCollectionRef(collection).doc(docId).update(data);
 
-const addCategory = async (categoryName: string): Promise<ICategoryNode> => {
-  const newCategorySnapshot = await getCategoriesRef().add({
-    categoryName,
-    children: [],
-  });
-  const newCategory = await newCategorySnapshot.get();
-  return {
-    id: newCategory.id,
-    categoryName,
-    children: [],
-    root: true,
-  };
+const createDocument = async (collection: string, data: any) => {
+  const snapshot = await getCollectionRef(collection).add(data);
+  const newDoc: any = (await snapshot.get()).data();
+  return newDoc;
 };
 
 const firestoreService = {
-  getCategories,
-  loadCategory,
-  updateCategory,
-  addCategory,
+  getCollectionRef,
+  getDocument,
+  updateDocument,
+  createDocument,
+  getCollection,
 };
 
 export default firestoreService;

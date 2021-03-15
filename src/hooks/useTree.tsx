@@ -1,5 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import firestoreService from "../firebase/firestore";
+import categoriesService from "../services/categories";
 import {
   addNewCategoryNodeToTreeTest,
   deleteCategoryNodeFromTreeTest,
@@ -19,7 +20,7 @@ function useTree({ root }: Props) {
     try {
       setLoading(true);
       setError("");
-      const category: any = await firestoreService.loadCategory(
+      const category: any = await categoriesService.getCategory(
         rootId.current ?? ""
       );
       setTree(category);
@@ -34,7 +35,7 @@ function useTree({ root }: Props) {
       try {
         setLoading(true);
         setError("");
-        await firestoreService.updateCategory(rootId.current ?? "", tree);
+        await categoriesService.updateCategory(rootId.current ?? "", tree);
       } catch (error) {
         setError("Could not save tree");
       } finally {

@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import firestoreService from "../firebase/firestore";
+import categoriesService from "../services/categories";
 
 function useTrees() {
   const [loading, setLoading] = useState(false);
@@ -10,7 +11,7 @@ function useTrees() {
   const setTrees = useCallback(async () => {
     setLoading(true);
     try {
-      const categoriesFromDB = await firestoreService.getCategories();
+      const categoriesFromDB = await categoriesService.getCategoriesCollection();
       setCategories(categoriesFromDB);
     } catch (error) {
       setError("Failed loading categories");
@@ -24,7 +25,7 @@ function useTrees() {
       try {
         setLoadingAdd(true);
         setError("");
-        const createdCategory = await firestoreService.addCategory(
+        const createdCategory = await categoriesService.createCategory(
           categoryName
         );
         setCategories((prev) => [...prev, createdCategory]);
