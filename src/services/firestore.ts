@@ -27,7 +27,7 @@ const getCollectionRef = (collection: string) =>
 
 const getCollection = async (collection: string) => {
   const snapshot = await getCollectionRef(collection).get();
-  const result: any = [];
+  const result: any[] = [];
   snapshot.forEach((doc) => {
     result.push({
       id: doc.id,

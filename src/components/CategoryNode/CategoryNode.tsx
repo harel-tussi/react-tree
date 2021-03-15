@@ -62,8 +62,6 @@ function CategoryNode({
 
   const isInputEmpty = !!!categoryNameState.trim();
 
-  console.log(id);
-
   return (
     <Container>
       <TopContainer>

@@ -8,8 +8,8 @@ function useTrees() {
   const [categories, setCategories] = useState<ICategoryNode[]>([]);
 
   const setTrees = useCallback(async () => {
-    setLoading(true);
     try {
+      setLoading(true);
       const categoriesFromDB = await categoriesService.getCategoriesCollection();
       setCategories(categoriesFromDB);
     } catch (error) {
