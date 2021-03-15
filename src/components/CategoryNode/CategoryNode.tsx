@@ -6,6 +6,8 @@ import {
   TopContainer,
   Input,
   ActionButton,
+  Toggle,
+  ChildrenContainer,
 } from "./CategoryNode.elements";
 
 type Props = {
@@ -30,11 +32,17 @@ function CategoryNode({ nodeRef, parentRef }: Props): ReactElement | null {
 
   if (!currentNode) return null;
 
+  const hasChildren = currentNode.children.length > 0;
+
   return (
     <Container root={currentNode.root}>
       <TopContainer>
-        <Title onClick={toggleChildren}>
-          {currentNode.root ? "" : "-"}
+        <Title root={currentNode.root}>
+          {hasChildren && (
+            <Toggle onClick={toggleChildren}>
+              {showChildren ? " -" : "+"}
+            </Toggle>
+          )}
           {currentNode.categoryName}
         </Title>
         <Input ref={inputRef} />
@@ -46,16 +54,19 @@ function CategoryNode({ nodeRef, parentRef }: Props): ReactElement | null {
         <ActionButton onClick={onUpdate}>Update</ActionButton>
         <ActionButton onClick={onAdd}>Add</ActionButton>
       </TopContainer>
-      {showChildren &&
-        currentNode.children.map((node: ICategoryNode) => {
-          return (
-            <MemoCategoryNode
-              key={node.id}
-              nodeRef={node}
-              parentRef={nodeRef}
-            />
-          );
-        })}
+      {showChildren && (
+        <ChildrenContainer root={currentNode.root}>
+          {currentNode.children.map((node: ICategoryNode) => {
+            return (
+              <MemoCategoryNode
+                key={node.id}
+                nodeRef={node}
+                parentRef={nodeRef}
+              />
+            );
+          })}
+        </ChildrenContainer>
+      )}
     </Container>
   );
 }

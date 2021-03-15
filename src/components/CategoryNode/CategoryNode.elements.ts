@@ -1,21 +1,28 @@
 import styled from "styled-components";
 
-interface ContainerProps {
-  root: boolean;
+interface NodeStyleProps {
+  root?: boolean;
 }
 
-export const Container = styled.div<ContainerProps>`
+export const Container = styled.div<NodeStyleProps>`
   margin-left: 15px;
   position: relative;
   padding: 10px 0;
-  ::before {
-    position: absolute;
-    content: "";
-    width: 2px;
-    height: 18px;
-    background-color: ${(props) => (props.root ? "transparent" : "#005790")};
-    top: 5px;
-  }
+`;
+
+export const ChildrenContainer = styled.div<NodeStyleProps>`
+  position: relative;
+  padding-left: 20px;
+`;
+
+export const Toggle = styled.button`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #005790;
+  border: none;
+  color: #fff;
+  margin-right: 10px;
 `;
 
 export const TopContainer = styled.div`
@@ -23,10 +30,11 @@ export const TopContainer = styled.div`
   align-items: center;
 `;
 
-export const Title = styled.h3`
+export const Title = styled.h3<NodeStyleProps>`
   color: #005790;
   font-weight: bold;
   margin: 0;
+  position: relative;
 `;
 
 export const Input = styled.input``;

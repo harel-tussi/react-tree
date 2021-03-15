@@ -26,7 +26,7 @@ function App() {
         <CreateCategory handleSubmit={addNewTree} />
       )}
       {(() => {
-        if (loading) return;
+        if (loading) return <p>Loading...</p>;
         if (error) return <p>Error...</p>;
         if (categories)
           return categories.map((category, index) => (
