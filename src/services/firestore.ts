@@ -58,12 +58,17 @@ const createDocument = async (collection: string, data: any) => {
   };
 };
 
+const deleteDocument = async (collection: string, docId: any) => {
+  return await getCollectionRef(collection).doc(docId).delete();
+};
+
 const firestoreService = {
   getCollectionRef,
+  getCollection,
   getDocument,
   updateDocument,
   createDocument,
-  getCollection,
+  deleteDocument,
 };
 
 export default firestoreService;

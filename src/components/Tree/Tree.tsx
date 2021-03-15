@@ -16,6 +16,7 @@ function Tree({ root }: Props): ReactElement {
     error,
     loadTree,
     saveTree,
+    deleteTree,
   } = useTree({
     root,
   });
@@ -38,6 +39,7 @@ function Tree({ root }: Props): ReactElement {
               />
               <button onClick={loadTree}>Load Tree</button>
               <button onClick={saveTree}>Save Tree</button>
+              <button onClick={deleteTree}>Delete Tree</button>
             </>
           );
         }

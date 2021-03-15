@@ -43,6 +43,21 @@ function useTree({ root }: Props) {
     }
   }, [setLoading, setError, tree, rootId]);
 
+  const deleteTree = useCallback(async () => {
+    if (tree) {
+      try {
+        setLoading(true);
+        setError("");
+        await categoriesService.deleteCategory(rootId.current);
+        setLoading(false);
+        setTree(null);
+      } catch (error) {
+        setError("Could not delete tree");
+        setLoading(false);
+      }
+    }
+  }, [setLoading, setError, tree, rootId]);
+
   const addNewNode = useCallback(
     (node: ICategoryNode, newNode: ICategoryNode) => {
       setTree((prevTree) => {
@@ -79,6 +94,7 @@ function useTree({ root }: Props) {
     updateNode,
     loadTree,
     saveTree,
+    deleteTree,
     loading,
     error,
     tree,

@@ -1,4 +1,4 @@
-import firestoreService from "../firebase/firestore";
+import firestoreService from "./firestore";
 
 const collection = "categories";
 
@@ -22,11 +22,16 @@ export const createCategory = async (categoryName: string) => {
   return await firestoreService.createDocument(collection, newCategory);
 };
 
+export const deleteCategory = async (docId: string) => {
+  await firestoreService.deleteDocument(collection, docId);
+};
+
 const categoriesService = {
   getCategoriesCollection,
   getCategory,
   updateCategory,
   createCategory,
+  deleteCategory,
 };
 
 export default categoriesService;
