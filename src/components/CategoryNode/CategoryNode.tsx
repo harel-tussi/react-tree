@@ -71,8 +71,13 @@ function CategoryNode({ nodeRef, parentRef }: Props): ReactElement | null {
   );
 }
 
-const MemoCategoryNode = memo(CategoryNode, (prevProps, nextProps) => {
+const isEqual = (
+  prevProps: Readonly<React.PropsWithChildren<Props>>,
+  nextProps: Readonly<React.PropsWithChildren<Props>>
+) => {
   return prevProps.nodeRef.v === nextProps.nodeRef.v;
-});
+};
+
+const MemoCategoryNode = memo(CategoryNode, isEqual);
 
 export default CategoryNode;
