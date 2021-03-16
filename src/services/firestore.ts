@@ -58,7 +58,7 @@ const createDocument = async (collection: string, data: any) => {
   };
 };
 
-const deleteDocument = async (collection: string, docId: any) => {
+const deleteDocument = async (collection: string, docId: string) => {
   return await getCollectionRef(collection).doc(docId).delete();
 };
 
