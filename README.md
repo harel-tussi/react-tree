@@ -1,6 +1,6 @@
 # Infinite Category Tree
 
-Infinite Category Tree built with React, Hooks, and Styled-Components
+Infinite Category Tree built with React, Hooks, Styled-Components and Firebase
 
 ## Installation
 
@@ -8,7 +8,7 @@ Infinite Category Tree built with React, Hooks, and Styled-Components
 npm install
 ```
 
-## Run App
+## Run
 
 ```bash
 npm start
