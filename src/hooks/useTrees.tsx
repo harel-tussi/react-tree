@@ -5,7 +5,7 @@ function useTrees() {
   const [loading, setLoading] = useState(false);
   const [loadingAdd, setLoadingAdd] = useState(false);
   const [error, setError] = useState("");
-  const [categories, setCategories] = useState<ICategoryNode[]>([]);
+  const [categories, setCategories] = useState<CategoryNode[]>([]);
 
   const setTrees = useCallback(async () => {
     try {

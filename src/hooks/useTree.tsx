@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import categoriesService from "../services/categories";
 interface Props {
-  root: null | ICategoryNode;
+  root: null | CategoryNode;
 }
 
 function useTree({ root }: Props) {

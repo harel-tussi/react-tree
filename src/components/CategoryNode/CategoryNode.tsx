@@ -11,8 +11,8 @@ import {
 } from "./CategoryNode.elements";
 
 type Props = {
-  nodeRef: ICategoryNode;
-  parentRef: ICategoryNode | null;
+  nodeRef: CategoryNode;
+  parentRef: CategoryNode | null;
 };
 
 // nodeRef - reference to our node in the tree
@@ -56,7 +56,7 @@ function CategoryNode({ nodeRef, parentRef }: Props): ReactElement | null {
       </TopContainer>
       {showChildren && (
         <ChildrenContainer root={currentNode.root}>
-          {currentNode.children.map((node: ICategoryNode) => {
+          {currentNode.children.map((node: CategoryNode) => {
             return (
               <MemoCategoryNode
                 key={node.id}

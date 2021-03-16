@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 interface Props {
-  nodeRef: null | ICategoryNode;
-  parentRef: null | ICategoryNode;
+  nodeRef: null | CategoryNode;
+  parentRef: null | CategoryNode;
 }
 
 function useCategory({ nodeRef, parentRef }: Props) {
   const [showChildren, setShowChildren] = useState(false);
-  const [currentNode, setCurrentNode] = useState<null | ICategoryNode>(nodeRef);
+  const [currentNode, setCurrentNode] = useState<null | CategoryNode>(nodeRef);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {

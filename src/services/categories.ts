@@ -8,7 +8,7 @@ export const getCategoriesCollection = async () =>
 export const getCategory = async (docId: string) =>
   await firestoreService.getDocument(COLLECTION, docId);
 
-export const updateCategory = async (docId: string, data: ICategoryNode) => {
+export const updateCategory = async (docId: string, data: CategoryNode) => {
   await firestoreService.updateDocument(COLLECTION, docId, data);
 };
 

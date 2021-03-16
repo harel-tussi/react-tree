@@ -1,7 +1,7 @@
-type ICategoryNode = {
+type CategoryNode = {
   id: string;
   categoryName: string;
-  children: ICategoryNode[];
+  children: CategoryNode[];
   root: boolean;
   v: number;
 };

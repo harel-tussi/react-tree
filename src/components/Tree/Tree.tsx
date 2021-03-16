@@ -3,7 +3,7 @@ import useTree from "../../hooks/useTree";
 import CategoryNode from "../CategoryNode";
 
 interface Props {
-  root: ICategoryNode;
+  root: CategoryNode;
 }
 
 function Tree({ root }: Props): ReactElement {

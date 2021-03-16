@@ -46,7 +46,7 @@ const getDocument = async (collection: string, docId: string) => {
 const updateDocument = async (
   collection: string,
   docId: string,
-  data: ICategoryNode
+  data: CategoryNode
 ) => await getCollectionRef(collection).doc(docId).update(data);
 
 const createDocument = async (collection: string, data: any) => {
